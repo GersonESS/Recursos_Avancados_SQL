@@ -1,0 +1,168 @@
+select * from funcionarios;
+select * from dependentes;
+*****
+select 
+funcionarios.id,
+concat(funcionarios.nome , funcionarios.sobrenome)
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+******
+select 
+funcionarios.id,
+concat(funcionarios.nome , " ", funcionarios.sobrenome)
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+******
+select 
+funcionarios.id,
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome '
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+******
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome '
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+******
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome '
+
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+********
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+**********
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+funcionarios.data_de_admissao
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+******
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y")
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+*******
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y") as 'Admissao',
+timestampdiff(year, funcionarios.data_de_nascimento , now()) as 'Idade'
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id; 
+*********
+
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y") as 'Admissao',
+timestampdiff(year, funcionarios.data_de_nascimento , now()) as 'Idade',
+count(dependentes.id) as 'Num Dep',
+group_concat(
+	concat(dependentes.nome, " ", dependentes.sobrenome)
+) as 'Dependentes'
+
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id
+group by funcionarios.id; 
+**********
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y") as 'Admissao',
+timestampdiff(year, funcionarios.data_de_nascimento , now()) as 'Idade',
+count(dependentes.id) as 'Num Dep',
+ifnull(
+	group_concat(
+		concat(dependentes.nome, " ", dependentes.sobrenome)
+),
+"---Não possui dependentes"
+)
+ as 'Dependentes'
+
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id
+group by funcionarios.id; 
+*********
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+if(
+funcionarios.salario > 5000,
+funcionarios.salario * 0.05,
+funcionarios.salario * 0.1
+) as 'Bonus',
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y") as 'Admissao',
+timestampdiff(year, funcionarios.data_de_nascimento , now()) as 'Idade',
+count(dependentes.id) as 'Num Dep',
+ifnull(
+	group_concat(
+		concat(dependentes.nome, " ", dependentes.sobrenome)
+),
+"---Não possui dependentes"
+)
+ as 'Dependentes'
+
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id
+group by funcionarios.id; 
+*******
+select 
+funcionarios.id as 'ID ',
+concat(funcionarios.nome , " ", funcionarios.sobrenome) as 'Nome ',
+funcionarios.cargo,
+funcionarios.salario,
+if(
+funcionarios.salario > 5000,
+(funcionarios.salario * 0.05) + count(dependentes.id)*100 ,
+(funcionarios.salario * 0.1) + count(dependentes.id)*100
+) as 'Bonus',
+date_format(funcionarios.data_de_admissao, "%d/%m/%Y") as 'Admissao',
+timestampdiff(year, funcionarios.data_de_nascimento , now()) as 'Idade',
+count(dependentes.id) as 'Num Dep',
+ifnull(
+	group_concat(
+		concat(dependentes.nome, " ", dependentes.sobrenome)
+),
+"---Não possui dependentes"
+)
+ as 'Dependentes'
+
+from funcionarios
+left join dependentes on dependentes.funcionario_id = funcionarios.id
+group by funcionarios.id; 
+
+
+
+
+
+
+
+
+
+select concat('srting1' , ' ', 'sring2'); 
+select date_format("2023-05-25", "%d/%m/%Y");
+select now();
+select timestampdiff(year, '1957-03-07', now());
